@@ -22,7 +22,8 @@ jobs:
         with:
           context: .
           push: true
+          #To get the tag of branch we use github default variable = "github.ref_name"
           tags: | 
             ${{ vars.DOCKERHUB_USER }}/github-actions-app:latest
-            ${{ vars.DOCKERHUB_USER }}/github-actions-app:${{ github.ref_name }}   #To get the tag of branch we use github default variable = "github.ref_name"
+            ${{ vars.DOCKERHUB_USER }}/github-actions-app:${{ github.ref_name }} 
             
