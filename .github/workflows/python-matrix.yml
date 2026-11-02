@@ -1,0 +1,26 @@
+name: Python lint
+
+on:
+  workflow-dispatch:
+  #push:
+    #branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    matrix:
+    strategy:
+      fail-fast: false
+        python-version: ["3.12", "3.13", "3.14"]
+
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up python {{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: {{ matrix.python-version }}
+
+      - name: Install python libraries and dependencies
+        run: pip install -r requirements.txt
