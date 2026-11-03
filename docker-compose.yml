@@ -3,4 +3,3 @@ services:
     image: ${DOCKERHUB_USER}/github-actions-app:latest
     ports:
       - "80:80"
-    restart: unless-stopped
