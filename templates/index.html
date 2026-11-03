@@ -1,9 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevOps Zero To Hero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -63,6 +67,25 @@
             font-size: 1.25rem;
             color: #f9fafb;
         }
+        .ci-banner {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+        .ci-banner .stage {
+            color: #00d2ff;
+            font-weight: 600;
+        }
+        .ci-banner .tool {
+            color: #c4b5fd;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -82,6 +105,9 @@
                 <span>Deploy</span>
                 <strong>AWS ECS</strong>
             </div>
+        </div>
+        <div class="ci-banner">
+            This page is <span class="stage">built</span>, <span class="stage">tested (link check)</span> and <span class="stage">deployed</span> with <span class="tool">GitHub Actions</span>
         </div>
     </div>
 </body>
