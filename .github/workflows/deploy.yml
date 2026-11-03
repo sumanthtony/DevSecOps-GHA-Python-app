@@ -1,7 +1,8 @@
 name: Deploy flask app
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   deploy:
