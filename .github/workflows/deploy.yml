@@ -5,10 +5,16 @@ on:
 
 jobs:
   deploy:
+    env :
+      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Code Checkout
         uses: actions/checkout@v4
 
-      - name: 
+      - name: Set up Docker Compose
+        uses: actions/setup-compose-action@v2
+
+      - name: Deploy with docker compose
+        run: docker compose up -d --build
