@@ -1,8 +1,12 @@
 name: Deploy flask app
 
 on:
-  push:
-    branches: [main]
+  # Workflow_run is used on triggering the events that only after one workflow is completed then only this current workflow should run, in these scenarios we use workflow_run
+  workflow_run:
+    workflows: ["Docker build & push"]
+    types: completed
+    branches:
+      - main
 
 jobs:
   deploy:
