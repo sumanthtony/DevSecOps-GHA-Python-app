@@ -1,0 +1,22 @@
+# Packages and vulnerabilities scan
+# Pip audit
+name: Dependency Scan
+
+on:
+  workflow_call:
+
+jobs:
+  dependency-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v6
+
+      - name: Install pip audit
+        run: pip install pip-audit
+
+      - name: Run pip audit & dependencies
+        run: pip-audit -r requirements.txt
+        
+
+      - name: 
