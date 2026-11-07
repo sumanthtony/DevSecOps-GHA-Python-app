@@ -12,11 +12,14 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@v6
 
+      - name: Install python 3.12 for pip 
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install pip audit
         run: pip install pip-audit
-
+        
       - name: Run pip audit & dependencies
         run: pip-audit -r requirements.txt
         
-
-      - name: 
