@@ -1,0 +1,31 @@
+# Linting and SAST scan
+# lint - flake8 & SAST - Bandit 
+name: Code Quality
+
+on:
+  workflow_call:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install python libraries and dependencies
+        run: pip install --no-cache-dir -r requirements.txt
+
+      - name: Run linter
+        run: flake8 app.py
+
+      - name: Run Bandit
+        run: bandit -r app.py
