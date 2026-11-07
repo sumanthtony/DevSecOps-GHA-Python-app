@@ -1,1 +1,19 @@
+# This will deploy safe, secure and tested app to Prod server
 
+name: Deploy to Server
+
+on:
+  workflow_call:
+
+jobs:
+  deploy-to-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH to Prod server
+        uses: appleboy/ssh-action@v1
+        with:
+          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          
