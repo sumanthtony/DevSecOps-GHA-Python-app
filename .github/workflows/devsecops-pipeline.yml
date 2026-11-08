@@ -18,6 +18,7 @@ jobs:
   dockerfile-scan:
     uses: ./.github/workflows/docker-lint.yml
 
+  # Build once all Security Scans are completed
   docker-build-push:
     needs: [code-quality, secrets-scan, dependency-scan, dockerfile-scan]
     uses: ./.github/workflows/docker-build-push.yml
