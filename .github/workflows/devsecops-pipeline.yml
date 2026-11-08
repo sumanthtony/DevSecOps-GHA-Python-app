@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  # CI (Continous Integration with Security Scanning)
   code-quality:
     uses: ./.github/workflows/code-quality.yml
 
