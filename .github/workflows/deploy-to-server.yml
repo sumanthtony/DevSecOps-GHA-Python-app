@@ -16,4 +16,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "Starting Deployment"
+            mkdir -p devops
           
