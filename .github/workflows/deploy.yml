@@ -12,6 +12,7 @@ jobs:
   deploy:
     env :
       DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+      DOCKER_TAG: ${{ github.event.workflow_run.head_sha }}  # written like this when workflow_run event used
     runs-on: self-hosted
 
     steps:
