@@ -8,6 +8,9 @@ on:
 jobs:
   deploy-to-server:
     runs-on: ubuntu-latest
+    env :
+      DOCKERHUB_USER: ${{ vars.DOCKERHUB_USER }}
+      DOCKER_TAG: ${{ github.sha }}
     steps:
       - name: SSH to Prod server & create a app folder
         uses: appleboy/ssh-action@v1
@@ -42,6 +45,8 @@ jobs:
             sudo apt-get update -y && sudo apt-get upgrade -y
             sudo apt-get install docker.io -y && sudo apt-get install docker-compose-v2 -y
             sudo usermod -aG docker $USER && newgrp docker
+            export DOCKERHUB_USER=${{ vars.DOCKERHUB_USER }}
+            export DOCKER_TAG=${{ github.sha }}
             echo "{{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ vars.DOCKERHUB_USER }} --password-stdin
             cd ~/devops && docker compose down && docker compose up -d --build --force-recreate --pull always
           
