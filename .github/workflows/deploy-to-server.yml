@@ -13,7 +13,7 @@ jobs:
       DOCKER_TAG: ${{ github.sha }}
     steps:
       - name: Code Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         
       - name: SSH to Prod server & create a app folder
         uses: appleboy/ssh-action@v1
@@ -27,7 +27,7 @@ jobs:
             mkdir -p devops
             sudo apt-get update -y
             sudo apt-get install docker.io -y && sudo apt-get install docker-compose-v2 -y
-            sudo usermod -aG docker $USER && newgrp docker
+            sudo usermod -aG docker $USER && sudo systemctl enable --now docker
 
       - name: Copy the docker-compose file
         uses: appleboy/scp-action@v1
@@ -50,6 +50,11 @@ jobs:
             echo "Running the app"
             export DOCKERHUB_USER=${{ vars.DOCKERHUB_USER }}
             export DOCKER_TAG=${{ github.sha }}
-            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ vars.DOCKERHUB_USER }} --password-stdin
-            cd ~/devops && docker compose down && docker compose up -d --build --force-recreate --pull always
+            # Execute the docker deployment directly inside the 'docker' group context (Here sg docker -c=switch group to docker and run -c commands under same docker group)
+            sg docker -c "
+              echo '${{ secrets.DOCKERHUB_TOKEN }}' | docker login -u '${{ vars.DOCKERHUB_USER }}' --password-stdin && \
+              cd ~/devops && \
+              docker compose down && \
+              docker compose up -d --build --force-recreate --pull always
+            "
           
