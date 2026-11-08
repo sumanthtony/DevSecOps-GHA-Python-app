@@ -50,11 +50,10 @@ jobs:
             echo "Running the app"
             export DOCKERHUB_USER=${{ vars.DOCKERHUB_USER }}
             export DOCKER_TAG=${{ github.sha }}
-            # Execute the docker deployment directly inside the 'docker' group context (Here sg docker -c=switch group to docker and run -c commands under same docker group)
-            sg docker -c "
-              echo '${{ secrets.DOCKERHUB_TOKEN }}' | docker login -u '${{ vars.DOCKERHUB_USER }}' --password-stdin && \
-              cd ~/devops && \
-              docker compose down && \
-              docker compose up -d --build --force-recreate --pull always
-            "
+            echo "Running the app"
+            # 1. Pipe token directly to docker login without enclosing in sg quotes
+            echo "${{ secrets. DOCKERHUB_TOKEN }}" | docker login -u "${{ vars.DOCKERHUB_USER }}" --password-stdin || echo "${{ secrets.DOCKERHUB_TOKEN }}" | sg docker -c "docker login -u \"${{ vars.DOCKERHUB_USER }}\" --password-stdin"
+            
+            # 2. Run compose under the docker group
+            sg docker -c "cd ~/devops && docker compose down && docker compose up -d --build --force-recreate --pull always"
           
