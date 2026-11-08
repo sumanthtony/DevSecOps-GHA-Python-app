@@ -1,5 +1,5 @@
 # It is the linting tool for python programming to check the syntax
-
+#Gunicorn (short for "Green Unicorn") is a production-ready Web Server Gateway Interface (WSGI) HTTP server for Python web applications
 flake8
 flask==3.1.3
 bandit
